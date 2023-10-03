@@ -1,1 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment System</title>
+    <!-- Include CSS styles for styling -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Out-Patient Appointment System</h1>
+    </header>
+    <section id="doctor-list">
+        <h2>Available Doctors</h2>
+        <!-- Display a list of available doctors here -->
+    </section>
+    <section id="availability-info">
+        <h2>Evening Availability</h2>
+        <p>Our doctors are available for appointments in the evenings from 5:00 PM to 9:00 PM, Monday through Friday. We are closed on weekends.</p>
+    </section>
+    <section id="appointment-form">
+        <h2>Book an Appointment</h2>
+        <form onsubmit="return validateTimeRange()">
+            <label for="patient-name">Patient Name:</label>
+            <input type="text" id="patient-name" name="patient-name" required>
+            
+            <label for="doctor">Select a Doctor:</label>
+            <select id="doctor" name="doctor" required>
+                <option value="dr-smith">Dr. John Smith</option>
+                <!-- Add more doctor options here -->
+            </select>
+
+            <label for="startTime">Select Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required>
+
+            <label for="endTime">Select End Time:</label>
+            <input type="time" id="endTime" name="endTime" required>
+            
+            <button type="submit">Book Appointment</button>
+        </form>
+        <div id="appointment-status"></div>
+    </section>
+    <section id="appointment-list">
+        <h2>Appointments</h2>
+        <!-- Display a list of booked appointments here -->
+    </section>
+    <footer>
+        <p>&copy; 2023 Appointment System</p>
+    </footer>
+    <!-- Include JavaScript for dynamic functionality -->
+    <script src="script.js"></script>
+    <script>
+        function validateTimeRange() {
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+
+            // Convert selected times to Date objects
+            const startDateTime = new Date(`2023-01-01T${startTime}`);
+            const endDateTime = new Date(`2023-01-01T${endTime}`);
+            
+            const validStartTime = new Date(`2023-01-01T17:00:00`); // 5:00 PM
+            const validEndTime = new Date(`2023-01-01T21:00:00`);   // 9:00 PM
+
+            // Check if the selected time range is within the valid range
+            if (startDateTime >= validStartTime && endDateTime <= validEndTime) {
+                // Time range is valid, allow submission
+                return true;
+            } else {
+                // Time range is not valid, show "Not Available" message
+                const appointmentStatus = document.getElementById('appointment-status');
+                appointmentStatus.textContent = "Not Available. Please select a time between 5:00 PM and 9:00 PM.";
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>
 
